@@ -17,39 +17,14 @@ public class Main {
 
     public static final int RUN_10_THREADS = 10;
     public static final int UP_TO_10_000_COUNTER = 10_000;
-//    public static void main(String[] args) {
-//
-////        Config hazelcastConfig = new Config();
-////        hazelcastConfig.setClusterName("hazelcast_lab2");
-//        ClientConfig clientConfig = new ClientConfig();
-//        clientConfig.setClusterName("hello-world");
-//        ClientNetworkConfig networkConfig = clientConfig.getNetworkConfig();
-//        networkConfig.addAddress(/*"127.0.0.1",*/ "192.168.1.54");
-//
-//        HazelcastInstance hz1 = HazelcastClient.newHazelcastClient(clientConfig);
-////        HazelcastInstance hz1 = Hazelcast.newHazelcastInstance(hazelcastConfig);
-////        HazelcastInstance hz2 = Hazelcast.newHazelcastInstance(hazelcastConfig);
-////        HazelcastInstance hz3 = Hazelcast.newHazelcastInstance(hazelcastConfig);
-//
-//        IMap<String, String> hzMap = hz1.getMap("my-distributed-map");
-//        hzMap.clear();
-////        hzMap.put("1", "John");
-////        hzMap.put("2", "Mary");
-////        hzMap.put("3", "Jane");
-//
-//
-////        System.out.println(hzMap.get("1"));
-////        System.out.println(hzMap.get("2"));
-////        System.out.println(hzMap.get("3"));
-//    }
 
     public static void main(String[] args) {
         createHzMap();
 
         long start = System.nanoTime();
 
-        logger.info("Test 1 Lost-Update with default Transaction Isolation level");
-        testDatabaseCounter(1, () -> HzCounterTester.test1(UP_TO_10_000_COUNTER));
+        logger.info("Test 1 with Distributed Map");
+        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test1(UP_TO_10_000_COUNTER));
 
         long finish = System.nanoTime();
         int finalCounter = getFinalCounter();

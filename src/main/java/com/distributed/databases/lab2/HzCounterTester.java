@@ -23,7 +23,8 @@ public class HzCounterTester {
 
     private static void incrementCounter(IMap<String, Integer> hzMap) {
         int value = hzMap.get(KEY);
-        hzMap.put(KEY, value + 1);
+        value++;
+        hzMap.put(KEY, value);
     }
 
     public static int getFinalCounter() {

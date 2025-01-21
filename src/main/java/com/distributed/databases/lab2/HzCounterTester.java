@@ -1,6 +1,7 @@
 package com.distributed.databases.lab2;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.cp.IAtomicLong;
 import com.hazelcast.map.IMap;
 
 /**
@@ -50,6 +51,15 @@ public class HzCounterTester {
         }
     }
 
+    public static void test4AtomicLong(final int maxCounterVal) {
+        HazelcastInstance hzClient = HzConfig.getClient();
+        IAtomicLong counter = hzClient.getCPSubsystem().getAtomicLong(KEY);
+
+        for (int i = 0; i < maxCounterVal; i++) {
+            counter.incrementAndGet();
+        }
+    }
+
     private static void incrementCounter(IMap<String, Integer> hzMap) {
         int value = hzMap.get(KEY);
         value++;
@@ -62,11 +72,23 @@ public class HzCounterTester {
         return hzMap.get(KEY);
     }
 
+    public static long getCounter() {
+        HazelcastInstance hzClient = HzConfig.getClient();
+        IAtomicLong counter = hzClient.getCPSubsystem().getAtomicLong(KEY);
+        return counter.get();
+    }
+
 
     public static void createHzMap() {
         HazelcastInstance hzClient = HzConfig.getClient();
         IMap<String, Integer> hzMap = hzClient.getMap(MY_COUNTER_DISTRIBUTED_MAP);
         hzMap.put(KEY, 0);
+    }
+
+    public static void createHzAtomicLong() {
+        HazelcastInstance hzClient = HzConfig.getClient();
+        IAtomicLong counter = hzClient.getCPSubsystem().getAtomicLong(KEY);
+        counter.set(0L);
     }
 
 }

@@ -21,7 +21,7 @@ public class HzCounterTester {
         }
     }
 
-    public static void test2(final int maxCounterVal) {
+    public static void test2PessimisticLocking(final int maxCounterVal) {
         HazelcastInstance hzClient = HzConfig.getClient();
         IMap<String, Integer> hzMap = hzClient.getMap(MY_COUNTER_DISTRIBUTED_MAP);
 
@@ -31,6 +31,21 @@ public class HzCounterTester {
                 incrementCounter(hzMap);
             } finally {
                hzMap.unlock(KEY);
+            }
+        }
+    }
+
+    public static void test3OptimisticLocking(final int maxCounterVal) {
+        HazelcastInstance hzClient = HzConfig.getClient();
+        IMap<String, Integer> hzMap = hzClient.getMap(MY_COUNTER_DISTRIBUTED_MAP);
+
+        for (int i = 0; i < maxCounterVal; i++) {
+            for(;;) {
+                int oldVal = hzMap.get(KEY);
+                int newVal = oldVal + 1;
+                if (hzMap.replace(KEY, oldVal, newVal)) {
+                    break;
+                }
             }
         }
     }

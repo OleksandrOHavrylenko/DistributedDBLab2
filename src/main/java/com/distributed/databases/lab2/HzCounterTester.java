@@ -21,6 +21,20 @@ public class HzCounterTester {
         }
     }
 
+    public static void test2(final int maxCounterVal) {
+        HazelcastInstance hzClient = HzConfig.getClient();
+        IMap<String, Integer> hzMap = hzClient.getMap(MY_COUNTER_DISTRIBUTED_MAP);
+
+        for (int i = 0; i < maxCounterVal; i++) {
+            hzMap.lock(KEY);
+            try {
+                incrementCounter(hzMap);
+            } finally {
+               hzMap.unlock(KEY);
+            }
+        }
+    }
+
     private static void incrementCounter(IMap<String, Integer> hzMap) {
         int value = hzMap.get(KEY);
         value++;

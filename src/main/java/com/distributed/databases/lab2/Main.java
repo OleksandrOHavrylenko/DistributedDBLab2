@@ -23,8 +23,10 @@ public class Main {
 
         long start = System.nanoTime();
 
-        logger.info("Test 1 with Distributed Map without locking");
-        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test1(UP_TO_10_000_COUNTER));
+//        logger.info("Test 1 with Distributed Map without locking");
+//        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test1(UP_TO_10_000_COUNTER));
+        logger.info("Test 2 with Distributed Map with Pessimistic Locking");
+        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test2(UP_TO_10_000_COUNTER));
 
         long finish = System.nanoTime();
         int finalCounter = getFinalCounter();

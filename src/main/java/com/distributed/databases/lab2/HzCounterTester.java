@@ -17,8 +17,13 @@ public class HzCounterTester {
         IMap<String, Integer> hzMap = hzClient.getMap(MY_COUNTER_DISTRIBUTED_MAP);
 
         for (int i = 0; i < maxCounterVal; i++) {
-            hzMap.compute(KEY, (k, counter) -> counter + 1);
+            incrementCounter(hzMap);
         }
+    }
+
+    private static void incrementCounter(IMap<String, Integer> hzMap) {
+        int value = hzMap.get(KEY);
+        hzMap.put(KEY, value + 1);
     }
 
     public static int getFinalCounter() {

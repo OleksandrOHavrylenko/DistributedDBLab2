@@ -20,6 +20,7 @@ public class HzCounterTester {
         for (int i = 0; i < maxCounterVal; i++) {
             incrementCounter(hzMap);
         }
+        hzClient.shutdown();
     }
 
     public static void test2PessimisticLocking(final int maxCounterVal) {
@@ -34,6 +35,7 @@ public class HzCounterTester {
                hzMap.unlock(KEY);
             }
         }
+        hzClient.shutdown();
     }
 
     public static void test3OptimisticLocking(final int maxCounterVal) {
@@ -49,6 +51,7 @@ public class HzCounterTester {
                 }
             }
         }
+        hzClient.shutdown();
     }
 
     public static void test4AtomicLong(final int maxCounterVal) {
@@ -58,6 +61,7 @@ public class HzCounterTester {
         for (int i = 0; i < maxCounterVal; i++) {
             counter.incrementAndGet();
         }
+        hzClient.shutdown();
     }
 
     private static void incrementCounter(IMap<String, Integer> hzMap) {
@@ -69,13 +73,17 @@ public class HzCounterTester {
     public static int getFinalCounter() {
         HazelcastInstance hzClient = HzConfig.getClient();
         IMap<String, Integer> hzMap = hzClient.getMap(MY_COUNTER_DISTRIBUTED_MAP);
-        return hzMap.get(KEY);
+        int i = hzMap.get(KEY);
+        hzClient.shutdown();
+        return i;
     }
 
     public static long getCounter() {
         HazelcastInstance hzClient = HzConfig.getClient();
         IAtomicLong counter = hzClient.getCPSubsystem().getAtomicLong(KEY);
-        return counter.get();
+        long l = counter.get();
+        hzClient.shutdown();
+        return l;
     }
 
 
@@ -89,6 +97,7 @@ public class HzCounterTester {
         HazelcastInstance hzClient = HzConfig.getClient();
         IAtomicLong counter = hzClient.getCPSubsystem().getAtomicLong(KEY);
         counter.set(0L);
+        hzClient.shutdown();
     }
 
 }

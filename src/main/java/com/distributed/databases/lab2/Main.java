@@ -14,23 +14,23 @@ import static com.distributed.databases.lab2.HzCounterTester.*;
 public class Main {
     private final static Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static final int RUN_10_THREADS = 10;
-    public static final int UP_TO_10_000_COUNTER = 10_000;
+    public static final int THREADS_10 = 10;
+    public static final int COUNTER_10000 = 10000;
 
     public static void main(String[] args) {
-        createHzMap();
-//        createHzAtomicLong();
+//        createHzMap();
+        createHzAtomicLong();
 
         long start = System.nanoTime();
 
-        logger.info("Test 1 with Distributed Map without locking");
-        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test1(UP_TO_10_000_COUNTER));
+//        logger.info("Test 1 with Distributed Map without locking");
+//        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test1(COUNTER_10000));
 //        logger.info("Test 2 with Distributed Map with Pessimistic Locking");
-//        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test2PessimisticLocking(UP_TO_10_000_COUNTER));
+//        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test2PessimisticLocking(COUNTER_10000));
 //        logger.info("Test 3 with Distributed Map with Optimistic Locking");
-//        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test3OptimisticLocking(UP_TO_10_000_COUNTER));
-//        logger.info("Test 4 with Atomic Long");
-//        testDatabaseCounter(RUN_10_THREADS, () -> HzCounterTester.test4AtomicLong(UP_TO_10_000_COUNTER));
+//        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test3OptimisticLocking(COUNTER_10000));
+        logger.info("Test 4 with Atomic Long");
+        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test4AtomicLong(COUNTER_10000));
 
         long finish = System.nanoTime();
         logger.info("Final result counter = {} per Duration: {} ms;", getCounter(), (finish - start) / 1_000_000.0);

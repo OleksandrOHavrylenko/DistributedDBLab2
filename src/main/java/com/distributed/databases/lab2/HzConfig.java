@@ -17,14 +17,12 @@ public class HzConfig {
         ClientConfig clientConfig = new ClientConfig();
         clientConfig.setClusterName(CLUSTER_NAME);
         ClientNetworkConfig networkConfig = clientConfig.getNetworkConfig();
-        networkConfig.addAddress(/*"127.0.0.1",*/ HZ_CLUSTER_IP);
+        networkConfig.addAddress( HZ_CLUSTER_IP);
 
         return clientConfig;
     }
 
     public static HazelcastInstance  getClient() {
-        ClientConfig clientConfig = HzConfig.getClientConfig();
-        HazelcastInstance hzClient = HazelcastClient.newHazelcastClient(clientConfig);
-        return hzClient;
+        return HazelcastClient.newHazelcastClient(getClientConfig());
     }
 }

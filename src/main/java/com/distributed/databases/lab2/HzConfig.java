@@ -18,6 +18,7 @@ public class HzConfig {
         clientConfig.setClusterName(CLUSTER_NAME);
         ClientNetworkConfig networkConfig = clientConfig.getNetworkConfig();
         networkConfig.addAddress( HZ_CLUSTER_IP);
+        networkConfig.setRedoOperation(true);
 
         return clientConfig;
     }

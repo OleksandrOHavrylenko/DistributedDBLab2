@@ -1,12 +1,11 @@
 package com.distributed.databases.lab2;
 
+import com.distributed.databases.lab2.tests.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.distributed.databases.lab2.HzCounterTester.*;
 
 /**
  * @author Oleksandr Havrylenko
@@ -18,23 +17,27 @@ public class Main {
     public static final int COUNTER_10000 = 10000;
 
     public static void main(String[] args) {
-//        createHzMap();
-        createHzAtomicLong();
+        final CounterTest counterTest = getTest(4);
+        counterTest.createData();
 
         long start = System.nanoTime();
 
-//        logger.info("Test 1 with Distributed Map without locking");
-//        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test1(COUNTER_10000));
-//        logger.info("Test 2 with Distributed Map with Pessimistic Locking");
-//        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test2PessimisticLocking(COUNTER_10000));
-//        logger.info("Test 3 with Distributed Map with Optimistic Locking");
-//        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test3OptimisticLocking(COUNTER_10000));
-        logger.info("Test 4 with Atomic Long");
-        testDatabaseCounter(THREADS_10, () -> HzCounterTester.test4AtomicLong(COUNTER_10000));
+        testDatabaseCounter(THREADS_10, () -> counterTest.test(COUNTER_10000));
 
         long finish = System.nanoTime();
-        logger.info("Final result counter = {} per Duration: {} ms;", getCounter(), (finish - start) / 1_000_000.0);
-//        logger.info("Final result counter = {} per Duration: {} ms;", getFinalCounter(), (finish - start) / 1_000_000.0);
+
+        logger.info(counterTest.getDescription());
+        logger.info("Final result counter = {} per Duration: {} ms;", counterTest.getResult(), (finish - start) / 1_000_000.0);
+    }
+
+    private static CounterTest getTest(final int testNumber) {
+        return switch (testNumber) {
+            case 1 -> new NotLockingCounter();
+            case 2 -> new PessimisticLockingCounter();
+            case 3 -> new OptimisticLockingCounter();
+            case 4 -> new AtomicLongCounter();
+            default -> throw new IllegalArgumentException("Invalid testNumber: " + testNumber);
+        };
     }
 
     private static void testDatabaseCounter(final int threadsNum, Runnable task) {

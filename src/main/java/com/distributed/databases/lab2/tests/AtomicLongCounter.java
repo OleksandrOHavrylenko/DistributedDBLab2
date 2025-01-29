@@ -13,7 +13,7 @@ public class AtomicLongCounter implements CounterTest{
     private final static Logger logger = LoggerFactory.getLogger(AtomicLongCounter.class);
     @Override
     public String getDescription() {
-        return "Test 4 with AtomicLong Counter";
+        return "Test 4 with AtomicLong Counter.";
     }
 
     @Override

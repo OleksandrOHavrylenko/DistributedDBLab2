@@ -14,7 +14,7 @@ public class PessimisticLockingCounter implements CounterTest {
 
     @Override
     public String getDescription() {
-        return "Test 2 with Distributed Map with Pessimistic Locking";
+        return "Test 2 with Distributed Map with Pessimistic Locking.";
     }
 
     @Override

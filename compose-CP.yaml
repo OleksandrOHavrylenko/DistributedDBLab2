@@ -4,6 +4,8 @@ services:
     environment:
       - HZ_NETWORK_PUBLICADDRESS=192.168.1.54:5701
       - HZ_CLUSTERNAME=hazelcast-lab2
+      - HZ_CPSUBSYSTEM_CPMEMBERCOUNT=3
+      - HZ_CPSUBSYSTEM_GROUPSIZE=3
     image: hazelcast/hazelcast:5.4.0
     ports:
       - 5701:5701
@@ -15,6 +17,8 @@ services:
     environment:
       - HZ_NETWORK_PUBLICADDRESS=192.168.1.54:5702
       - HZ_CLUSTERNAME=hazelcast-lab2
+      - HZ_CPSUBSYSTEM_CPMEMBERCOUNT=3
+      - HZ_CPSUBSYSTEM_GROUPSIZE=3
     image: hazelcast/hazelcast:5.4.0
     ports:
       - 5702:5701
@@ -26,6 +30,8 @@ services:
     environment:
       - HZ_NETWORK_PUBLICADDRESS=192.168.1.54:5703
       - HZ_CLUSTERNAME=hazelcast-lab2
+      - HZ_CPSUBSYSTEM_CPMEMBERCOUNT=3
+      - HZ_CPSUBSYSTEM_GROUPSIZE=3
     image: hazelcast/hazelcast:5.4.0
     ports:
       - 5703:5701

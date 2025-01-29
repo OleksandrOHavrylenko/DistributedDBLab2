@@ -13,7 +13,7 @@ public class OptimisticLockingCounter implements CounterTest{
     private final static Logger logger = LoggerFactory.getLogger(OptimisticLockingCounter.class);
     @Override
     public String getDescription() {
-        return "Test 3 with Distributed Map with Optimistic Locking";
+        return "Test 3 with Distributed Map with Optimistic Locking.";
     }
 
     @Override

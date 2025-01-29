@@ -14,7 +14,7 @@ public class NotLockingCounter implements CounterTest {
 
     @Override
     public String getDescription() {
-        return "Test 1 with Distributed Map without locking";
+        return "Test 1 with Distributed Map without locking.";
     }
 
     @Override

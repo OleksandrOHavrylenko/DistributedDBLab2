@@ -17,6 +17,8 @@ public class Main {
     public static final int COUNTER_10000 = 10000;
 
     public static void main(String[] args) {
+
+//      Set correct test number according to Lab2 description;
         final CounterTest counterTest = getTest(4);
         counterTest.createData();
 
@@ -26,8 +28,8 @@ public class Main {
 
         long finish = System.nanoTime();
 
-        logger.info(counterTest.getDescription());
-        logger.info("Final result counter = {} per Duration: {} ms;", counterTest.getResult(), (finish - start) / 1_000_000.0);
+        logger.info("{}\nFinal result counter = {} per Duration: {} ms;",
+                counterTest.getDescription(), counterTest.getResult(), (finish - start) / 1_000_000.0);
     }
 
     private static CounterTest getTest(final int testNumber) {
@@ -36,7 +38,7 @@ public class Main {
             case 2 -> new PessimisticLockingCounter();
             case 3 -> new OptimisticLockingCounter();
             case 4 -> new AtomicLongCounter();
-            default -> throw new IllegalArgumentException("Invalid testNumber: " + testNumber);
+            default -> throw new IllegalArgumentException("Invalid testNumber: " + testNumber + ", expected: 1-4 inclusive");
         };
     }
 
